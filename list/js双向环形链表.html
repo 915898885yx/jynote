@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>circle-list</title>
+</head>
+<body>
+
+</body>
+<script type="text/javascript">
+	// 链表的节点，分别为三个值，上一个，下一个，当前的值
+	function Node (self) {
+		this.self = self;
+		this.preNode = null;
+		this.nextNode = null;
+	}
+	Node.prototype.next = function () {
+		return this.nextNode;
+	}
+	Node.prototype.prev = function () {
+		return this.preNode;
+	}
+	Node.prototype.value = function () {
+		return this.self;
+	}
+	// 链表
+	function List (node) {
+		this.listLink = [] // 链表
+		this.nowNode = null // 当前节点
+	}
+	List.prototype.checkZero = function () {
+		if (this.listLink.length == 0) {
+			console.log('linklist length is zero');
+			return false;
+		}
+	}
+	List.prototype.checkIndexRange = function (index) {
+		if (index < 0 || index >= this.listLink.length) {
+			new Error('not in range');
+			return false;
+		}
+		return true;
+	}
+	List.prototype.value = function () {
+		return this.nowNode.value();
+	}
+	//环形链表，首尾相连
+	List.prototype.circle = function () {
+		if (this.listLink.length != 0) {
+			this.listLink[this.listLink.length - 1].nextNode = 
+			this.listLink[0];
+			this.listLink[0].preNode = 
+			this.listLink[this.listLink.length - 1]
+		}
+	}
+	//获取链表的第一个元素
+	List.prototype.first = function () {
+		this.checkZero()
+		this.nowNode = this.listLink[0]
+		return this.nowNode;
+	}
+	//获取链表的最后一个节点
+	List.prototype.last = function () {
+		this.checkZero()
+		return this.listLink[this.listLink.length - 1]
+	}
+	//获取当前节点的上一个节点
+	List.prototype.prev = function () {
+		this.checkZero();
+		this.nowNode = this.nowNode.prev()
+		return this.nowNode;
+	}
+	//当前节点的下一个节点
+	List.prototype.next = function () {
+		this.checkZero();
+		if (this.nowNode == null) {
+			return this.nowNode = this.listLink[0]
+		} else {
+			this.nowNode = this.nowNode.nextNode;
+			return this.nowNode;
+		}
+	}
+	//末尾添加一个节点
+	List.prototype.add = function (value) {
+		let node = new Node(value)
+		if (this.listLink.length == 0) {
+			this.listLink.push(node)
+		} else {
+			this.mergeNode(this.listLink[this.listLink.length - 1], node)
+			this.listLink.push(node)
+		}
+		this.circle()
+	}
+	List.prototype.mergeNode = function (lNode, nNode) {
+		lNode.nextNode = nNode;
+		nNode.preNode = lNode;
+	}
+	//根据索引值，删除节点
+	List.prototype.del = function (index) {
+		if (!this.checkIndexRange(index)) {
+			console.error(new Error('not in range'));
+			return false;
+		}
+		this.mergeNode(this.listLink[index].preNode, this.listLink[index].nextNode)
+		let node = this.listLink.splice(index, 1);
+		return node;
+	}
+	//根绝索引值，插入一个节点，第二个参数为节点的值
+	List.prototype.insert = function (index, value) {
+		if (!this.checkIndexRange(index)) {
+			console.error(new Error('not in range'));
+			return false;
+		};
+		let node = new Node(value);
+		this.mergeNode(this.listLink[index].preNode, node)
+		this.mergeNode(node, this.listLink[index])
+		this.listLink.splice(index, 0, node);
+	}
+	var list = new List();
+</script>
+</html>

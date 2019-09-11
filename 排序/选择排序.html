@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>test</title>
+</head>
+<body>
+</body>
+<script type="text/javascript">
+//排序。每次拿到最小的，和第一个去换
+function selectionSort(arr) {
+　　let minIndex, temp;
+  for (let i = 0; i < arr.length - 1; i++) {
+    for (let j = i + 1; j < arr.length; j++) {
+      if (arr[i] > arr[j]) {
+        minIndex = j
+      }
+    }
+    temp = arr[i]
+    arr[i] = arr[minIndex]
+    arr[minIndex] = temp
+  }
+　　return arr;
+}
+var arr=[3,44,38,5,47,15,36,26,27,2,46,4,19,50,48];
+console.log(selectionSort(arr));//[2, 3, 4, 5, 15, 19, 26, 27, 36, 38, 44, 46, 47, 48, 50]；
+</script>
+</html>

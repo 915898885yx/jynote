@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>pro</title>
+</head>
+<script type="text/javascript">
+	class PromiseNew {
+		constructor (fn) {
+			this.state = "PENDING";
+			this.doneList = [];
+			this.failList = [];
+			fn(this.resolve.bind(this), this.reject.bind(this));
+		}
+
+		done (handle) {
+			console.log(handle, '******')
+			if (typeof handle == 'function') {
+				console.log('1')
+				this.doneList.push(handle)
+			} else {
+				throw new Error('loss function')
+			}
+			return this;
+		}
+
+		fail (handle) {
+			if (typeof handle == 'function') {
+				this.failList.push(handle);
+			} else {
+				throw new Error('loss function')
+			}
+			return this;
+		}
+
+		then(success, fail) {
+			this.done(success || function () {}).fail(fail || function () {});
+			return this;
+		}
+
+		always(handle) {
+			this.done(handle || function () {}).fail(handle || function () {})
+		}
+
+		resolve () {
+			this.state = "RESOLVED";
+			let args = Array.prototype.slice.call(arguments);
+			console.log(args, '//////')
+			console.log('3')
+			setTimeout(function () {
+				this.doneList.forEach((item, key, arr) => {
+					item.apply(null, args);
+					arr.shift()
+				})
+				console.log('2')
+			}.bind(this), 0)
+		}
+
+		reject() {
+			this.state = "REJECTED";
+			let args = Array.prototype.slice.call(arguments);
+			setTimeout(function () {
+				this.failList.forEach((item, key, arr) => {
+					item.apply(null, args);
+					arr.shift()
+				})
+			}.bind(this), 0);
+		}
+	}
+new PromiseNew((resolve, reject) => {
+	resolve('hello world');
+}).then(res => {
+  console.log(res, 'res')
+}, err => {
+	console.log(err, 'err')
+})
+</script>
+<body>
+
+</body>
+</html>

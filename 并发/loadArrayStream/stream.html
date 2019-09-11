@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+<script type="text/javascript">
+
+	const {loadArrayStream} from './index.js'
+	console.log(loadArrayStream, 'loadArrayStream')
+
+	let arr = []
+	for (let i = 0; i < 1000000; i++) {
+		let obj = {}
+		obj.id = i;
+		obj.value = `value:${i}`;
+		obj.name = "name123";
+		arr.push(obj)
+		if (i == 999999) {
+			console.log(arr)
+			var oDiv1 = document.createElement('div');
+			oDiv1.innerHTML = '.innerHTML = //////////'
+			document.body.appendChild(oDiv1)
+			let stream = new readStream(arr)
+			stream.setStep(500)
+			stream.on('data', function (data) {
+				for (let j = 0; j < data.length; j++) {
+					var oDiv = document.createElement('div')
+					oDiv.innerHTML = `${j}`
+					document.body.appendChild(oDiv)
+				}
+			})
+			// for (let j = 0; j < arr.length; j++) {
+			// 	var oDiv = document.createElement('div');
+			// 	oDiv.innerHTML = `${j}`
+			// 	document.body.appendChild(oDiv)
+			// }
+		}
+	}
+</script>
+</body>
+</html>

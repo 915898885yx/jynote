@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+<button>点击计算斐波那契数列38层</button>
+</body>
+<script type="text/javascript">
+	document.querySelector('button').onclick = function () {
+		function fibonacci (n) {
+			return n < 2 ? n : arguments.callee(n - 1) + arguments.callee(n - 2)
+		}
+		console.time('计算的时间是')
+		console.log(fibonacci(38))
+		console.timeEnd('计算的时间是')
+	}
+</script>
+</html>

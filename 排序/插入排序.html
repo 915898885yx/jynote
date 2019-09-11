@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>test</title>
+</head>
+<body>
+</body>
+<script type="text/javascript">
+var arr = [6, 1, 5, 8, 3, 7, 9, 4, 2, 2]
+function insertSort(arr) {
+  let result = [arr[0]]
+  for (let i = 1; i < arr.length; i++) {
+    for (let j = 0; j < i; j++) {
+      if (arr[i] < result[j]) {
+        result.splice(j, 0, arr[i])
+        break;
+      } else if (j == i - 1) {
+        result.push(arr[i])
+      }
+    }
+  }
+  return result;
+}
+console.log(insertSort(arr))
+</script>
+</html>

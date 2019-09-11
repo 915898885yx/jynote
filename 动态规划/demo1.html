@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+
+</body>
+<script type="text/javascript">
+// 斐波那契数列
+  function recurFib(n) {
+      if(n < 2){
+      		n = 1
+          return n ;
+      }else {
+//                    document.write("第"+(n-1)+"次计算&nbsp;n-1="+(n-1)+recurFib(n-1)+'&nbsp;&nbsp;&nbsp;');
+//                    document.write("n-2="+(n-2)+recurFib(n-2)+"<br>");
+          return recurFib(n-1)+recurFib(n-2)
+      }
+  }
+  console.log(recurFib(5))
+</script>
+</html>
